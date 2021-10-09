@@ -1951,9 +1951,12 @@ void idGameLocal::InitFromNewMap( const char *mapName, idRenderWorld *renderWorl
 // ddynerman: set gametype
 	SetGameType();
 // RAVEN END
+//WULF BEGIN
+	LoadMap("maps/game/walker.map", randseed);
 
-	LoadMap( mapName, randseed );
+//	LoadMap( mapName, randseed );
 
+// WULF END
 	InitScriptForMap();
 
 	MapPopulate();

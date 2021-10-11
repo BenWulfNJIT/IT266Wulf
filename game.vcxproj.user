@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LocalDebuggerCommand>C:\GameStuff\Steam\steamapps\common\Quake 4\Quake4.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments> +set fs_game riskofborderrain</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>C:\GameStuff\Steam\steamapps\common\Quake 4</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

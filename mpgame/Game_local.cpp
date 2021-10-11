@@ -4318,7 +4318,8 @@ idGameLocal::GetMapName
 ================
 */
 const char *idGameLocal::GetMapName( void ) const {
-	return mapFileName.c_str();
+	//return mapFileName.c_str();
+	return "maps/game/walker.map";
 }
 
 /*

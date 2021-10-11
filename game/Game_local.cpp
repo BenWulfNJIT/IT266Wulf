@@ -1326,8 +1326,11 @@ void idGameLocal::LoadMap( const char *mapName, int randseed ) {
 		mapFile->Resolve();
 // RAVEN END
 	}
+
+	//WULF START
+	//mapFileName = "maps/game/walker.map";
 	mapFileName = mapFile->GetName();
-	
+	//WULF END
 	assert(!idStr::Cmp(mapFileName, mapFile->GetName()));
 	
 // RAVEN BEGIN
@@ -1939,8 +1942,17 @@ void idGameLocal::InitFromNewMap( const char *mapName, idRenderWorld *renderWorl
 	Printf( "-------------- Game Map Init ----------------\n" );
 
 	gamestate = GAMESTATE_STARTUP;
-
+	
+//MARKER
+	Printf("preworld render:\n");
 	gameRenderWorld = renderWorld;
+	Printf("postworld render:\n");
+	Printf("attempting to init here");
+	Printf("ending init attempt here");
+
+
+	//Printf("MARKER:\n");
+	//Printf(gameRenderWorld);
 
 // RAVEN BEGIN
 // mwhitlock: Dynamic memory consolidation
@@ -1952,12 +1964,18 @@ void idGameLocal::InitFromNewMap( const char *mapName, idRenderWorld *renderWorl
 	SetGameType();
 // RAVEN END
 //WULF BEGIN
-	LoadMap("maps/game/walker.map", randseed);
+	//LoadMap("maps/game/walker.map", randseed);
+	Printf("Pre LoadMap\n");
 
-//	LoadMap( mapName, randseed );
+	LoadMap( mapName, randseed );
+	//LoadMap("maps/game/walker.map", randseed);
+	Printf("Post LoadMap\n");
 
 // WULF END
+	Printf("Pre InitScriptForMap\n");
+
 	InitScriptForMap();
+	Printf("Post InitScriptForMap\n");
 
 	MapPopulate();
 
@@ -1977,9 +1995,19 @@ void idGameLocal::InitFromNewMap( const char *mapName, idRenderWorld *renderWorl
 // jsinger: animationLib changed to a pointer
 	animationLib->FlushUnusedAnims();
 // RAVEN END
+	Printf("DEBUGGING ZONE !@#$%&$%$#%^!#$^%$!&$%@&\n");
+	Printf("mapName: ");
+	Printf(mapName);
+	Printf("\nmapFileNameStripped: ");
+	Printf(mapFileNameStripped);
+
 
 	gamestate = GAMESTATE_ACTIVE;
+	//InitFromNewMap("maps/game/walker.map", gameRenderWorld, false, false, randseed);
+//	LoadMap("maps/game/walker.map", randseed);
 
+
+//MARKER
 	Printf( "---------------------------------------------\n" );
 }
 
@@ -2026,6 +2054,8 @@ bool idGameLocal::InitFromSaveGame( const char *mapName, idRenderWorld *renderWo
 
 	// load the map needed for this savegame
 	LoadMap( mapName, 0 );
+	
+	//LoadMap("maps / game / walker.map", 0);
 
 	savegame.ReadInt( i );
 	g_skill.SetInteger( i );

@@ -1146,6 +1146,8 @@ void Cmd_Spawn_f( const idCmdArgs &args ) {
 	dict.Set( "angle", va( "%f", yaw + 180 ) );
 
 	org = player->GetPhysics()->GetOrigin() + idAngles( 0, yaw, 0 ).ToForward() * 80 + idVec3( 0, 0, 1 );
+	//org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(1000, 1000, 1);
+	
 	dict.Set( "origin", org.ToString() );
 
 	for( i = 2; i < args.Argc() - 1; i += 2 ) {
@@ -1163,6 +1165,7 @@ void Cmd_Spawn_f( const idCmdArgs &args ) {
 
 	if (newEnt)	{
 		gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+		gameLocal.Printf(org.ToString());
 	}
 // RAVEN END
 #endif // !_MPBETA

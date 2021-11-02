@@ -188,6 +188,13 @@ public:
 
 	virtual int				GetDamageForLocation( int damage, int location );
 	const char *			GetDamageGroup( int location );
+	//WULF START
+	//boolean					isCrit;
+	
+	bool					checkForCrit(int damage, int location);
+	void					setPlayerCurrency(int damage, int location);
+
+	//WULF END
 	void					ClearPain( void );
 	virtual bool			Pain( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
 	virtual void			AddDamageEffect( const trace_t &collision, const idVec3 &velocity, const char *damageDefName, idEntity* inflictor );

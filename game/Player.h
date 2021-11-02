@@ -1002,6 +1002,7 @@ private:
 	bool					weaponChangeIconsUp;
 
 	int						oldInventoryWeapons;
+	int						playerCurrency;
 
 	const idDeclEntityDef*	itemCosts;
 

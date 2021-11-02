@@ -9960,9 +9960,12 @@ doesn't actually do anything with them.  This is used to tell when an attack
 would have killed the player, possibly allowing a "saving throw"
 =================
 */
+//WULF
 void idPlayer::CalcDamagePoints( idEntity *inflictor, idEntity *attacker, const idDict *damageDef,
 							   const float damageScale, const int location, int *health, int *armor ) {
 	int		damage;
+	//gameLocal.Printf("TEST ");
+	//gameLocal.Printf();
 	int		armorSave;
 	float	pDmgScale;
 
@@ -10196,6 +10199,8 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
  	// inform the attacker that they hit someone
  	attacker->DamageFeedback( this, inflictor, damage );
+	
+	
 	
 //RAVEN BEGIN
 //asalmon: Xenon needs stats in singleplayer
@@ -12980,6 +12985,9 @@ void idPlayer::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damag
 			armorHit = true;
 		}
 	} 
+	// I FOUND IT
+	gameLocal.Printf("Damage: %i\n", damage);
+	//gameLocal.Printf();
 
 	SetLastHitTime( gameLocal.time, armorHit );
 }

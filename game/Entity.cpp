@@ -3609,6 +3609,7 @@ callback function for when another entity recieved damage from this entity.  dam
 ================
 */
 void idEntity::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damage ) {
+	// nope gameLocal.Printf("Lol Testing");
 	// implemented in subclasses
 }
 
@@ -3633,6 +3634,7 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 					  const char *damageDefName, const float damageScale, const int location ) {
 	if ( forwardDamageEnt.IsValid() ) {
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, damageScale, location );
+		gameLocal.Printf("TESTING");
 		return;
 	}
 
@@ -3658,8 +3660,10 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	// inform the attacker that they hit someone
 	attacker->DamageFeedback( this, inflictor, damage );
 	if ( damage ) {
+
 		// do the damage
 		//jshepard: this is kinda important, no?
+		//gameLocal.Printf("TESTING");
 		health -= damage;
 
 		if ( health <= 0 ) {

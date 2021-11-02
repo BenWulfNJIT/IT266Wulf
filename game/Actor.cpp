@@ -2398,6 +2398,10 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 
 	int	damage = damageDef->GetInt( "damage" ) * damageScale;
 	damage = GetDamageForLocation( damage, location );
+	bool critflag = checkForCrit(damage, location);
+	setPlayerCurrency(damage, location);
+	//gameLocal.Printf("TESTING %i\n", critflag);
+	//gameLocal.Printf(critflag);
 
 	// friendly fire damage
 	bool noDmgFeedback = false;
@@ -2801,14 +2805,46 @@ void idActor::SetupDamageGroups( void ) {
 		arg = spawnArgs.MatchPrefix( "damage_scale ", arg );
 	}
 }
+//WULF BEGIN
 
+
+void idActor::setPlayerCurrency(int damage, int location)
+{
+	if (checkForCrit(damage, location)) {
+		playerCurrency += (damage * 2);
+		gameLocal.Printf("Succesfully added: %i\n", (damage * 2));
+		gameLocal.Printf("Current Total: %i\n", playerCurrency);
+	}
+	else {
+		playerCurrency += damage;
+		gameLocal.Printf("Succesfully added: %i\n", damage);
+		gameLocal.Printf("Current Total: %i\n", playerCurrency);
+
+	}
+}
+
+bool idActor::checkForCrit(int damage, int location) {
+	idStr checkHead = "head";
+	if (damageGroups[location] == checkHead) {
+		gameLocal.Printf("CRIT\n");
+		return true;
+	}
+	else {
+		gameLocal.Printf("NOT CRIT\n");
+		return false;
+	}
+}
+
+//WULF END
 /*
 =====================
 idActor::GetDamageForLocation
 =====================
 */
 int idActor::GetDamageForLocation( int damage, int location ) {
+
 	if ( ( location < 0 ) || ( location >= damageScale.Num() ) ) {
+	
 		return damage;
 	}
 

@@ -109,6 +109,16 @@ public:
 
 class idEntity : public idClass {
 public:
+
+
+
+	//WULF BEGIN
+	boolean					isCrit;
+	bool					checkForCrit(int damage, int location);
+	void					setPlayerCurrency(int damage, bool critCheck);
+	int						playerCurrency = 0;
+
+	//WULF END
 	static const int		MAX_PVS_AREAS = 4;
 
 	int						entityNumber;			// index into the entity list

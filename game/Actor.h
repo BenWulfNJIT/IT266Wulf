@@ -190,9 +190,9 @@ public:
 	const char *			GetDamageGroup( int location );
 	//WULF START
 	//boolean					isCrit;
-	
-	bool					checkForCrit(int damage, int location);
-	void					setPlayerCurrency(int damage, int location);
+	//int
+	//bool					checkForCrit(int damage, int location);
+	//void					setPlayerCurrency(int damage, int location);
 
 	//WULF END
 	void					ClearPain( void );

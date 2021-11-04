@@ -481,7 +481,7 @@ public:
 	virtual bool			Collide( const trace_t &collision, const idVec3 &velocity );
 
  	virtual void			GetAASLocation( idAAS *aas, idVec3 &pos, int &areaNum ) const;
- 	virtual void			DamageFeedback( idEntity *victim, idEntity *inflictor, int &damage );
+ 	virtual void			DamageFeedback( idEntity *victim, idEntity *inflictor, int &damage);
 	void					CalcDamagePoints(  idEntity *inflictor, idEntity *attacker, const idDict *damageDef,
 							   const float damageScale, const int location, int *health, int *armor );
 	virtual	void			Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, const char *damageDefName, const float damageScale, const int location );
@@ -1002,8 +1002,7 @@ private:
 	bool					weaponChangeIconsUp;
 
 	int						oldInventoryWeapons;
-	int						playerCurrency;
-
+	
 	const idDeclEntityDef*	itemCosts;
 
 	bool					WantSmoothing( void ) const;
@@ -1119,6 +1118,8 @@ private:
 	// RAVEN END
 
 	bool					IsLegsIdle						( bool crouching ) const;
+
+	
 	
 	stateResult_t			State_Wait_Alive				( const stateParms_t& parms );
 	stateResult_t			State_Wait_ReloadAnim			( const stateParms_t& parms );

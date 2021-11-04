@@ -2395,12 +2395,35 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 	if ( !damageDef ) {
 		gameLocal.Error( "Unknown damageDef '%s'", damageDefName );
 	}
+	
+	bool critCheck = false;
+	if (location > 0) {
+		
+		idStr checkHead = "head";
+		if (damageGroups.Num() > location && damageGroups[location] == checkHead) {
+			gameLocal.Printf("CRIT\n");
+			critCheck = true;
+		}
+		else {
+			gameLocal.Printf("NOT CRIT\n");
+			critCheck = false;
+		}
+	}
 
 	int	damage = damageDef->GetInt( "damage" ) * damageScale;
 	damage = GetDamageForLocation( damage, location );
-	bool critflag = checkForCrit(damage, location);
-	setPlayerCurrency(damage, location);
-	//gameLocal.Printf("TESTING %i\n", critflag);
+	//bool critflag = checkForCrit(damage, location);
+	//idPlayer::setPlayerCurrency(damage, location);
+
+
+
+	
+		attacker->setPlayerCurrency(damage, critCheck);
+	
+
+
+
+	//gameLocal.Printf("TESTING oh no");
 	//gameLocal.Printf(critflag);
 
 	// friendly fire damage
@@ -2806,34 +2829,6 @@ void idActor::SetupDamageGroups( void ) {
 	}
 }
 //WULF BEGIN
-
-
-void idActor::setPlayerCurrency(int damage, int location)
-{
-	if (checkForCrit(damage, location)) {
-		playerCurrency += (damage * 2);
-		gameLocal.Printf("Succesfully added: %i\n", (damage * 2));
-		gameLocal.Printf("Current Total: %i\n", playerCurrency);
-	}
-	else {
-		playerCurrency += damage;
-		gameLocal.Printf("Succesfully added: %i\n", damage);
-		gameLocal.Printf("Current Total: %i\n", playerCurrency);
-
-	}
-}
-
-bool idActor::checkForCrit(int damage, int location) {
-	idStr checkHead = "head";
-	if (damageGroups[location] == checkHead) {
-		gameLocal.Printf("CRIT\n");
-		return true;
-	}
-	else {
-		gameLocal.Printf("NOT CRIT\n");
-		return false;
-	}
-}
 
 //WULF END
 /*

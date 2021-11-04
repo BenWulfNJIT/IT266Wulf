@@ -3612,6 +3612,28 @@ void idEntity::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damag
 	// nope gameLocal.Printf("Lol Testing");
 	// implemented in subclasses
 }
+//WULF BEGIN
+
+
+void idEntity::setPlayerCurrency(int damage, bool critCheck)
+{
+	if (critCheck) {
+		playerCurrency += (damage * 2);
+		gameLocal.Printf("Succesfully added: %i\n", (damage * 2));
+		gameLocal.Printf("Current Total: %i\n", playerCurrency);
+	}
+	else {
+		playerCurrency += damage;
+		gameLocal.Printf("Succesfully added: %i\n", damage);
+		gameLocal.Printf("Current Total: %i\n", playerCurrency);
+
+	}
+}
+
+
+
+//WULF END
+
 
 /*
 ============

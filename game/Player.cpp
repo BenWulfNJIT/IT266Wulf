@@ -9968,7 +9968,6 @@ void idPlayer::CalcDamagePoints( idEntity *inflictor, idEntity *attacker, const 
 	//gameLocal.Printf();
 	int		armorSave;
 	float	pDmgScale;
-
 	damageDef->GetInt( "damage", "20", damage );
 	damage = GetDamageForLocation( damage, location );
 
@@ -10075,7 +10074,8 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	// RAVEN BEGIN
 	// twhitaker: difficulty levels
 	float modifiedDamageScale = damageScale;
-	
+	//gameLocal.Printf("test??!?!?");
+	//setPlayerCurrency(damage, location);
 	if ( !gameLocal.isMultiplayer ) {
 		if ( inflictor != gameLocal.world ) {
 			modifiedDamageScale *= ( 1.0f + gameLocal.GetDifficultyModifier() );
@@ -10198,10 +10198,18 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	ClientDamageEffects ( damageDef->dict, dir, damage );
 
  	// inform the attacker that they hit someone
- 	attacker->DamageFeedback( this, inflictor, damage );
+ 	attacker->DamageFeedback( this, inflictor, damage);
+	//bool critflag = checkForCrit(damage, location);
 	
+	//gameLocal.Printf("TESTING %i\n", critflag);
+	//gameLocal.Printf(critflag);
+	//WULF BEGIN
+
+
 	
-	
+	//WULF END
+
+
 //RAVEN BEGIN
 //asalmon: Xenon needs stats in singleplayer
 #ifndef _XENON
@@ -10323,7 +10331,6 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 			BecomeActive( TH_PHYSICS );
 		}
 	}
-
 	lastDamageDir = dir;
   	lastDamageDir.Normalize();
 	lastDamageDef = damageDef->Index();
@@ -10415,6 +10422,12 @@ void idPlayer::Teleport( const idVec3 &origin, const idAngles &angles, idEntity 
 	}
 }
 
+//WULF BEGIN
+
+
+
+//WULF END
+
 /*
 ====================
 idPlayer::SetPrivateCameraView
@@ -10499,6 +10512,13 @@ float idPlayer::CalcFov( bool honorZoom ) {
 
 	return fov;
 }
+//WULF BEGIN
+
+
+
+
+//WULF END
+
 
 /*
 ==============
@@ -12962,7 +12982,7 @@ void idPlayer::Flashlight ( bool on ) {
 idPlayer::DamageFeedback
 ================
 */
-void idPlayer::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damage ) {
+void idPlayer::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damage) {
 	
 	//rvTramCars weren't built on the idActor inheritance hierarchy but need to be treated like one when shot.
 	//TODO: Maybe add a key to entity flags that will allow them to be shot as actors even if they aren't actors?
@@ -12987,6 +13007,7 @@ void idPlayer::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damag
 	} 
 	// I FOUND IT
 	gameLocal.Printf("Damage: %i\n", damage);
+	
 	//gameLocal.Printf();
 
 	SetLastHitTime( gameLocal.time, armorHit );

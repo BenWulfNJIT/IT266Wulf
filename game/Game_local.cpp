@@ -11,6 +11,7 @@
 #include "ai/AI_Manager.h"
 #include "ai/AAS_tactical.h"
 #include "Game_Log.h"
+
 // RAVEN END
 
 //#define UI_DEBUG	1
@@ -1490,6 +1491,10 @@ void idGameLocal::LoadMap( const char *mapName, int randseed ) {
 // ddynerman: ambient light list
 	ambientLights.Clear();
 // RAVEN END
+
+	//Wulf BEGIN
+	BeginLevel(currentLevel);
+	//WULF END
 }
 
 /*
@@ -7229,6 +7234,94 @@ idEntity* idGameLocal::SelectSpawnPoint( idPlayer* player ) {
 	int rnd = rvRandom::flrand( 0.0, 1.0 ) * (weightedSpawns.Num() / 2);
 	return weightedSpawns[ rnd ].ent;
 }
+
+//WULF BEGIN
+
+void idGameLocal::SetLevel(int level) {
+	currentLevel = level + 1;
+}
+
+int idGameLocal::GetLevel() {
+	return currentLevel;
+}
+
+void idGameLocal::BeginLevel(int level) {
+
+	idDict initialSpawnTest;
+	int heightCalc = 0;
+	initialSpawnTest.idDict::Set("anim", "idle");
+	initialSpawnTest.idDict::Set("classname", "monster_strogg_marine_base");
+	//initialSpawnTest.idDict::Set("name", "testSpawn1");
+
+
+
+	if (level == 0) {
+		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
+		initialSpawnTest.idDict::SetVector("origin", idVec3(6000, -5590, -2250));
+		SpawnEntityDef(initialSpawnTest);
+		totalSpawns++;
+		initialSpawnTest.idDict::Delete("origin");
+		
+
+
+		//Printf("TEST BEFORE SPAWN");
+		//while (heightCalc > -2300) {
+			//initialSpawnTest("origin") == idVec3(6000, -5590, heightCalc);
+			//for (int x = 6000; x <= 6400; x += 200) {
+			//	for (int y = -5600; y <= -5200; y += 200) {
+
+					//grid people
+					//initialSpawnTest.idDict::SetVector("origin", idVec3(x, y, -1000));
+					// //tower people
+					//initialSpawnTest.idDict::SetVector("origin", idVec3(6000, -5590, heightCalc));
+					//heightCalc -= 100;
+			//		SpawnEntityDef(initialSpawnTest);
+			//		initialSpawnTest.idDict::Delete("origin");
+
+
+			//	}
+			//}
+			
+			//heightCalc -= 200;
+
+		//}
+	}
+	else if (level % 3 == 0) {
+		//do boss stuff
+		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
+	}
+	else {
+		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
+		//do regular wave spawn
+		for (int x = 6000; x <= 6400; x += 200) {
+				for (int y = -5600; y <= -5200; y += 200) {
+
+					//grid people
+					//initialSpawnTest.idDict::SetVector("origin", idVec3(x, y, -1000));
+					 //tower people
+					initialSpawnTest.idDict::SetVector("origin", idVec3(6000, -5590, heightCalc));
+					heightCalc -= 100;
+					SpawnEntityDef(initialSpawnTest);
+					totalSpawns++;
+					Printf("Current Total Spawns After Spawning = %i\n", totalSpawns);
+					initialSpawnTest.idDict::Delete("origin");
+
+
+				}
+			}
+	}
+}
+
+ 
+
+
+//WULF END
+
+
+
+
+
+
 /*
 ================
 idGameLocal::UpdateServerInfoFlags

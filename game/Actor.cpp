@@ -1273,6 +1273,13 @@ idActor::SetState
 =====================
 */
 void idActor::SetState( const char *statename, int flags ) {
+	gameLocal.totalSpawns--;
+	gameLocal.Printf("Total Spawns after Dying: %i\n", gameLocal.totalSpawns);
+	if (gameLocal.totalSpawns <= 0) {
+		gameLocal.SetLevel(gameLocal.currentLevel);
+		gameLocal.totalSpawns = 0;
+		gameLocal.BeginLevel(gameLocal.currentLevel);
+	}
 	OnStateThreadClear( statename, flags );
 	stateThread.SetState ( statename, 0, 0, flags );
 }
@@ -2515,7 +2522,7 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 		int oldHealth = health;
 		AdjustHealthByDamage ( damage );
 		if ( health <= 0 ) {
-
+			
 			//allow for quick burning
 			if (damageDef->GetFloat( "quickburn", "0" ) && !spawnArgs.GetFloat("no_quickburn", "0"))	{
 				fl.quickBurn = true;
@@ -2536,6 +2543,10 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 				}
 			}
 			Killed( inflictor, attacker, damage, dir, location );
+			
+
+
+
 			gibbed = saveGibbed;
 			if ( health < -20 )
 			{

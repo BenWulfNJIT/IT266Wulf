@@ -63,6 +63,7 @@ class idThread;
 class idEditEntities;
 class idLocationEntity;
 
+
 // RAVEN BEGIN
 // dluetscher: reduced max clients for memory usage
 #ifdef _XENON
@@ -321,6 +322,15 @@ class rvGravityArea;
 
 class idGameLocal : public idGame {
 public:
+
+	//WULF BEGIN
+	int						currentLevel = 0;
+	int						totalSpawns = 0;
+	void					BeginLevel(int currentLevel);
+	void					SetLevel(int currentLevel);
+	int						GetLevel();
+	//WULF END
+
 	idDict					serverInfo;				// all the tunable parameters, like numclients, etc
 	int						numClients;				// pulled from serverInfo and verified
 	idDict					userInfo[MAX_CLIENTS];	// client specific settings
@@ -392,6 +402,9 @@ public:
 	int						mHz;					// hertz
 
 	int						vacuumAreaNum;			// -1 if level doesn't have any outside areas
+
+
+	
 
 // RAVEN BEGIN
 // abahr:

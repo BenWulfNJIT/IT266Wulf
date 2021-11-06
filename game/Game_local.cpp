@@ -7247,68 +7247,62 @@ int idGameLocal::GetLevel() {
 
 void idGameLocal::BeginLevel(int level) {
 
+	// ===================== INITIAL MONSTER SPAWN ================================
 	idDict initialSpawnTest;
-	int heightCalc = 0;
 	initialSpawnTest.idDict::Set("anim", "idle");
 	initialSpawnTest.idDict::Set("classname", "monster_strogg_marine_base");
-	//initialSpawnTest.idDict::Set("name", "testSpawn1");
+	initialSpawnTest.idDict::SetVector("origin", idVec3(6000, -5590, -2250));
+	
+	// ===================== REGULAR WAVE SPAWNING ================================
 
+	idDict regularWaveSpawns;
+	regularWaveSpawns.idDict::Set("anim", "idle");
+	regularWaveSpawns.idDict::Set("classname", "monster_strogg_marine");
+	//regularWaveSpawns.idDict::SetVector("origin", idVec3(7000, -9000, -2350));
+	int quantityToSpawn = level;
 
+	// ===================== BOSS WAVE SPAWNING=== ================================
+
+	idDict bossWaveSpawns;
+	bossWaveSpawns.idDict::Set("anim", "idle");
+	bossWaveSpawns.idDict::Set("classname", "monster_turret_flying");
+	bossWaveSpawns.idDict::SetVector("origin", idVec3(7072, -8965, -235));
 
 	if (level == 0) {
+
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
-		initialSpawnTest.idDict::SetVector("origin", idVec3(6000, -5590, -2250));
+		
 		SpawnEntityDef(initialSpawnTest);
 		totalSpawns++;
+		Printf("Current Total Spawns After Spawning = %i\n", totalSpawns);
 		initialSpawnTest.idDict::Delete("origin");
 		
-
-
-		//Printf("TEST BEFORE SPAWN");
-		//while (heightCalc > -2300) {
-			//initialSpawnTest("origin") == idVec3(6000, -5590, heightCalc);
-			//for (int x = 6000; x <= 6400; x += 200) {
-			//	for (int y = -5600; y <= -5200; y += 200) {
-
-					//grid people
-					//initialSpawnTest.idDict::SetVector("origin", idVec3(x, y, -1000));
-					// //tower people
-					//initialSpawnTest.idDict::SetVector("origin", idVec3(6000, -5590, heightCalc));
-					//heightCalc -= 100;
-			//		SpawnEntityDef(initialSpawnTest);
-			//		initialSpawnTest.idDict::Delete("origin");
-
-
-			//	}
-			//}
-			
-			//heightCalc -= 200;
-
-		//}
 	}
 	else if (level % 3 == 0) {
 		//do boss stuff
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
+		SpawnEntityDef(bossWaveSpawns);
+		totalSpawns++;
+		Printf("Current Total Spawns After Spawning = %i\n", totalSpawns);
+		//bossWaveSpawns.idDict::Delete("origin");
+
 	}
 	else {
+
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
+
 		//do regular wave spawn
-		for (int x = 6000; x <= 6400; x += 200) {
-				for (int y = -5600; y <= -5200; y += 200) {
 
-					//grid people
-					//initialSpawnTest.idDict::SetVector("origin", idVec3(x, y, -1000));
-					 //tower people
-					initialSpawnTest.idDict::SetVector("origin", idVec3(6000, -5590, heightCalc));
-					heightCalc -= 100;
-					SpawnEntityDef(initialSpawnTest);
-					totalSpawns++;
-					Printf("Current Total Spawns After Spawning = %i\n", totalSpawns);
-					initialSpawnTest.idDict::Delete("origin");
+		for (int i = 0; i < quantityToSpawn; i++) {
 
+			regularWaveSpawns.idDict::SetVector("origin", idVec3(7072, -8965, -2350+(i*150)));
+			//regularWaveSpawns.idDict::SetVector("origin", idVec3(6000 + (i*50), -5590, -2250));
+			SpawnEntityDef(regularWaveSpawns);
+			totalSpawns++;
+			Printf("Current Total Spawns After Spawning = %i\n", totalSpawns);
+			regularWaveSpawns.idDict::Delete("origin");
 
-				}
-			}
+		}
 	}
 }
 

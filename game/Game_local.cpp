@@ -7292,22 +7292,72 @@ void idGameLocal::BeginLevel(int level) {
 	//idVec3 closeSpawn = idVec3(6000, -5590, -2250);
 	//idAngles defaultAngle = idAngles(0, 0, 0);
 	//redShader
-	idDict shaderRed;
-	shaderRed.idDict::Set("classname", "light");
-	shaderRed.idDict::SetVector("origin", idVec3(6000, -5590, -2250));
-	shaderRed.idDict::Set("nodynamicshadows", "0");
-	shaderRed.idDict::Set("noshadows", "1");
-	shaderRed.idDict::Set("nospecular", "0");
-	shaderRed.idDict::Set("nodiffuse", "0");
-	shaderRed.idDict::Set("falloff", "0");
-	shaderRed.idDict::Set("texture", "lights/rav_slowfalloff");
-	shaderRed.idDict::Set("_color", "190 0.1 0.1");
-	//shaderRed.idDict::Set("light_radius", "1576 2348 2000");
-	shaderRed.idDict::Set("light_radius", "5000 5000 5000");
-	shaderRed.idDict::Set("light_center", "-256 712 -1064");
+	
+	//idEntity redShader;
+	//redShader.idEntity::SetOrigin(idVec3(6000, -5590, -2250));
+	//redShader.spawnArgs.SetVector("origin", idVec3(6000, -5590, -2250));
+	
+	//redShader.spawnArgs.Set("classname", "light");
+	//redShader.spawnArgs.Set("name", "redShader");
+	//	redShader.spawnArgs.Set("nodynamicshadows", "0");
+	//	redShader.spawnArgs.Set("noshadows", "1");
+	//	redShader.spawnArgs.Set("nospecular", "0");
+	/*	redShader.spawnArgs.Set("nodiffuse", "0");
+		redShader.spawnArgs.Set("falloff", "0");
+		redShader.spawnArgs.Set("texture", "lights/rav_slowfalloff");
+		redShader.spawnArgs.Set("_color", "210 0.1 0.1");
+		redShader.spawnArgs.Set("light_radius", "1576 2348 2000");
+		redShader.spawnArgs.Set("light_center", "-256 712 -1064");
+		*/
+	//redShader.idEntity::Spawn);
+	
+	// =========================== RED SHADER =================================
+	idDict redShader;
+	redShader.idDict::Set("classname", "light");
+	redShader.idDict::SetVector("origin", idVec3(0,0,0));
+	redShader.idDict::Set("name", "redShader");
+	redShader.idDict::Set("nodynamicshadows", "0");
+	redShader.idDict::Set("noshadows", "1");
+	redShader.idDict::Set("nospecular", "0");
+	redShader.idDict::Set("nodiffuse", "0");
+	redShader.idDict::Set("falloff", "0");
+	redShader.idDict::Set("texture", "lights/rav_slowfalloff");
+	redShader.idDict::Set("_color", "220 0.1 0.1");
+	redShader.idDict::Set("light_radius", "5000 5000 5000");
+	redShader.idDict::Set("light_center", "-256 712 -1064");
+
+	// =========================== BLUE SHADER =================================
+	idDict blueShader;
+	blueShader.idDict::Set("classname", "light");
+	blueShader.idDict::SetVector("origin", idVec3(0, 0, 0));
+	blueShader.idDict::Set("name", "blueShader");
+	blueShader.idDict::Set("nodynamicshadows", "0");
+	blueShader.idDict::Set("noshadows", "1");
+	blueShader.idDict::Set("nospecular", "0");
+	blueShader.idDict::Set("nodiffuse", "0");
+	blueShader.idDict::Set("falloff", "0");
+	blueShader.idDict::Set("texture", "lights/rav_slowfalloff");
+	blueShader.idDict::Set("_color", "0.1 0.1 220");
+	blueShader.idDict::Set("light_radius", "5000 5000 5000");
+	blueShader.idDict::Set("light_center", "-256 712 -1064");
+
+	// =========================== Green SHADER =================================
+	idDict greenShader;
+	greenShader.idDict::Set("classname", "light");
+	greenShader.idDict::SetVector("origin", idVec3(0, 0, 0));
+	greenShader.idDict::Set("name", "greenShader");
+	greenShader.idDict::Set("nodynamicshadows", "0");
+	greenShader.idDict::Set("noshadows", "1");
+	greenShader.idDict::Set("nospecular", "0");
+	greenShader.idDict::Set("nodiffuse", "0");
+	greenShader.idDict::Set("falloff", "0");
+	greenShader.idDict::Set("texture", "lights/rav_slowfalloff");
+	greenShader.idDict::Set("_color", "0.1 220 0.1");
+	greenShader.idDict::Set("light_radius", "5000 5000 5000");
+	greenShader.idDict::Set("light_center", "-256 712 -1064");
 
 	
-		
+	
 		
 		
 		
@@ -7321,15 +7371,28 @@ void idGameLocal::BeginLevel(int level) {
 	//independently spawn loot man
 	if (level%3 ==  1) {
 
+
 		//idRandom.RandomInt(10);
 		SpawnEntityDef(lootMan);
-
+		FindEntity("redShader")->SetOrigin(idVec3(0,0,0));
+		FindEntity("blueShader")->SetOrigin(idVec3(6000, -5590, -100));
+		FindEntity("greenShader")->SetOrigin(idVec3(0, 0, 0));
+	}
+	if (level % 3 == 2) {
+		FindEntity("redShader")->SetOrigin(idVec3(0, 0, 0));
+		FindEntity("blueShader")->SetOrigin(idVec3(0,0,0));
+		FindEntity("greenShader")->SetOrigin(idVec3(6000, -5590, -100));
 	}
 	
 
 	if (level == 0) {
-		SpawnEntityDef(shaderRed);
-		shaderRed.idDict::Delete("origin");
+		//redShader.Spawn();
+		SpawnEntityDef(redShader);
+		SpawnEntityDef(greenShader);
+		SpawnEntityDef(blueShader);
+
+		//idEntity::g
+		//redShader.idDict::Delete("origin");
 		
 	
 		
@@ -7340,12 +7403,16 @@ void idGameLocal::BeginLevel(int level) {
 		
 	}
 	else if (level % 3 == 0) {
-		shaderRed.idDict::SetVector("origin", idVec3(7077, -8211, -2243));
-		SpawnEntityDef(shaderRed);
-		shaderRed.idDict::Delete("origin");
+		//redShader.idDict::SetVector("origin", idVec3(7077, -8211, -2243));
+		//SpawnEntityDef(redShader);
+		//redShader.idDict::Delete("origin");
 
 		
 		//do boss stuff
+		FindEntity("redShader")->SetOrigin(idVec3(6000, -5590, -100));
+		FindEntity("blueShader")->SetOrigin(idVec3(0,0,0));
+		FindEntity("greenShader")->SetOrigin(idVec3(0,0,0));
+
 		//idEntity::Teleport()
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
 		SpawnEntityDef(bossWaveSpawns);
@@ -7359,7 +7426,7 @@ void idGameLocal::BeginLevel(int level) {
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
 
 		//do regular wave spawn
-
+		
 		for (int i = 0; i < quantityToSpawn; i++) {
 
 			regularWaveSpawns.idDict::SetVector("origin", idVec3(7072, -8965, -2350+(i*150)));

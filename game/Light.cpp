@@ -381,7 +381,7 @@ void idLight::Spawn( void ) {
 
 	// set the base color from the shader parms
 	baseColor.Set( renderLight.shaderParms[ SHADERPARM_RED ], renderLight.shaderParms[ SHADERPARM_GREEN ], renderLight.shaderParms[ SHADERPARM_BLUE ] );
-
+	//baseColor.Set(143, 12, 200);
 	// set the number of light levels
 	spawnArgs.GetInt( "levels", "1", levels );
 	currentLevel = levels;
@@ -510,10 +510,13 @@ void idLight::SetLightLevel( void ) {
 	float	intensity;
 
 	intensity = (( float )currentLevel / ( float )levels);
+	//intensity = 0.999999f;
+	//color = baseColor;
 	color = baseColor * intensity;
 	renderLight.shaderParms[ SHADERPARM_RED ]	= color[ 0 ];
 	renderLight.shaderParms[ SHADERPARM_GREEN ]	= color[ 1 ];
 	renderLight.shaderParms[ SHADERPARM_BLUE ]	= color[ 2 ];
+	//renderLight.shaderParms[SHADERPARM_BLUE] = 249;
 	renderEntity.shaderParms[ SHADERPARM_RED ]	= color[ 0 ];
 	renderEntity.shaderParms[ SHADERPARM_GREEN ]= color[ 1 ];
 	renderEntity.shaderParms[ SHADERPARM_BLUE ]	= color[ 2 ];
@@ -1021,7 +1024,8 @@ idLight::Event_SetLightParms
 ================
 */
 void idLight::Event_SetLightParms( float parm0, float parm1, float parm2, float parm3 ) {
-	SetLightParms( parm0, parm1, parm2, parm3 );
+	//SetLightParms( parm0, parm1, parm2, parm3 );
+	SetLightParms(17, 200, 198, 177);
 }
 
 /*
@@ -1481,6 +1485,7 @@ idLight::Event_SetMaxLightLevel
 */
 void idLight::Event_SetMaxLightLevel( int in ) { 
 	levels = in; 
+	//levels == 10000;
 	SetLightLevel();
 }
 

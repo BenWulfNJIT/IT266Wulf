@@ -59,7 +59,8 @@ void rvEffect::Spawn( void ) {
 	spawnArgs.GetBool( "lookAtTarget", "0", lookAtTarget );
 
 	renderEntity.shaderParms[SHADERPARM_ALPHA] = spawnArgs.GetFloat ( "_alpha", "1" );
-	renderEntity.shaderParms[SHADERPARM_BRIGHTNESS] = spawnArgs.GetFloat ( "_brightness", "1" );
+	//renderEntity.shaderParms[SHADERPARM_BRIGHTNESS] = spawnArgs.GetFloat ( "_brightness", "1" );
+	renderEntity.shaderParms[SHADERPARM_BRIGHTNESS] = 178.0f;
 
     if( spawnArgs.GetBool( "start_on", loop ? "1" : "0" ) ) {
 		ProcessEvent( &EV_Activate, this );
@@ -153,6 +154,7 @@ bool rvEffect::Play( void ) {
 		color[3] = renderEntity.shaderParms[SHADERPARM_ALPHA];
 		clientEffect->SetColor ( color );
 		clientEffect->SetBrightness ( renderEntity.shaderParms[ SHADERPARM_BRIGHTNESS ] );
+		//clientEffect->SetBrightness(200);
 		clientEffect->SetAmbient( true );
 
 		BecomeActive ( TH_THINK );
@@ -223,6 +225,7 @@ void rvEffect::UpdateChangeableSpawnArgs( const idDict *source ) {
 	if ( clientEffect ) {		
 		clientEffect->SetColor ( idVec4(color[0],color[1],color[2],renderEntity.shaderParms[ SHADERPARM_ALPHA ]) );
 		clientEffect->SetBrightness ( renderEntity.shaderParms[ SHADERPARM_BRIGHTNESS ] );
+		//clientEffect->SetBrightness(169.0f);
 	}
 
 	source->GetBool ( "loop", "0", newLoop );

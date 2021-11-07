@@ -302,6 +302,7 @@ void idTarget_SetShaderParm::Event_Activate( idEntity *activator ) {
 		for( i = 0; i < targets.Num(); i++ ) {
 			ent = targets[ i ].GetEntity();
 			if ( ent ) {
+				
 				ent->SetColor( color[ 0 ], color[ 1 ], color[ 2 ] );
 			}
 		}

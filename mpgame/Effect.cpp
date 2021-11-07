@@ -59,7 +59,8 @@ void rvEffect::Spawn( void ) {
 	spawnArgs.GetBool( "lookAtTarget", "0", lookAtTarget );
 
 	renderEntity.shaderParms[SHADERPARM_ALPHA] = spawnArgs.GetFloat ( "_alpha", "1" );
-	renderEntity.shaderParms[SHADERPARM_BRIGHTNESS] = spawnArgs.GetFloat ( "_brightness", "1" );
+	//renderEntity.shaderParms[SHADERPARM_BRIGHTNESS] = spawnArgs.GetFloat ( "_brightness", "1" );
+	renderEntity.shaderParms[SHADERPARM_BRIGHTNESS] = 172.0f;
 
     if( spawnArgs.GetBool( "start_on", loop ? "1" : "0" ) ) {
 		ProcessEvent( &EV_Activate, this );

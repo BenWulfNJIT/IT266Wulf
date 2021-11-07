@@ -1817,6 +1817,8 @@ void idAI::TalkTo( idActor *actor ) {
 	if ( aifl.dead )
 		return;
 
+	
+
 	ExecScriptFunction( funcs.onclick );
 
 	// Cant talk when already talking

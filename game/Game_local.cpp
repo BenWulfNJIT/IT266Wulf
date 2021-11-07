@@ -7247,6 +7247,11 @@ int idGameLocal::GetLevel() {
 
 void idGameLocal::BeginLevel(int level) {
 
+	// ===================== SMOKE SPAWNS ================================
+	
+	idDict frontSmoke;
+
+
 	// ===================== INITIAL MONSTER SPAWN ================================
 	idDict initialSpawnTest;
 	initialSpawnTest.idDict::Set("anim", "idle");
@@ -7272,20 +7277,61 @@ void idGameLocal::BeginLevel(int level) {
 	
 	idDict lootMan;
 	lootMan.idDict::Set("anim", "idle");
-	lootMan.idDict::Set("name", "lootMan");
+	//lootMan.idDict::Set("name", "lootMan");
 	lootMan.idDict::Set("classname", "char_marine_npc_metcalf_airdefense");
-	lootMan.idDict::SetVector("origin", idVec3(6000, -5590, -2250));
+	lootMan.idDict::SetVector("origin", idVec3(6000, -5590, -10));
+
+	// ===================== LOOT MAN CHARACTERISTICS ===================================
+
+	int preSplit;
+	int randomDamageModifier;
+	
+	// ===================== LIGHTING SHADER STUFF ===================================
+
+	//idVec3 farSpawn = idVec3(0, 0, 0);
+	//idVec3 closeSpawn = idVec3(6000, -5590, -2250);
+	//idAngles defaultAngle = idAngles(0, 0, 0);
+	//redShader
+	idDict shaderRed;
+	shaderRed.idDict::Set("classname", "light");
+	shaderRed.idDict::SetVector("origin", idVec3(6000, -5590, -2250));
+	shaderRed.idDict::Set("nodynamicshadows", "0");
+	shaderRed.idDict::Set("noshadows", "1");
+	shaderRed.idDict::Set("nospecular", "0");
+	shaderRed.idDict::Set("nodiffuse", "0");
+	shaderRed.idDict::Set("falloff", "0");
+	shaderRed.idDict::Set("texture", "lights/rav_slowfalloff");
+	shaderRed.idDict::Set("_color", "190 0.1 0.1");
+	//shaderRed.idDict::Set("light_radius", "1576 2348 2000");
+	shaderRed.idDict::Set("light_radius", "5000 5000 5000");
+	shaderRed.idDict::Set("light_center", "-256 712 -1064");
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
 
 	//independently spawn loot man
-	if (level == 4) {
+	if (level%3 ==  1) {
+
+		//idRandom.RandomInt(10);
 		SpawnEntityDef(lootMan);
 
 	}
 	
 
 	if (level == 0) {
-
-		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
+		SpawnEntityDef(shaderRed);
+		shaderRed.idDict::Delete("origin");
+		
+	
 		
 		SpawnEntityDef(initialSpawnTest);
 		totalSpawns++;
@@ -7294,7 +7340,13 @@ void idGameLocal::BeginLevel(int level) {
 		
 	}
 	else if (level % 3 == 0) {
+		shaderRed.idDict::SetVector("origin", idVec3(7077, -8211, -2243));
+		SpawnEntityDef(shaderRed);
+		shaderRed.idDict::Delete("origin");
+
+		
 		//do boss stuff
+		//idEntity::Teleport()
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
 		SpawnEntityDef(bossWaveSpawns);
 		totalSpawns++;

@@ -336,6 +336,8 @@ void idGameEdit::ParseSpawnArgsToRenderEntity( const idDict *args, renderEntity_
 	renderEntity->shaderParms[ SHADERPARM_RED ]		= color[0];
 	renderEntity->shaderParms[ SHADERPARM_GREEN ]	= color[1];
 	renderEntity->shaderParms[ SHADERPARM_BLUE ]	= color[2];
+	//renderEntity->shaderParms[SHADERPARM_BLUE] = 178;
+
 	renderEntity->shaderParms[ 3 ]					= args->GetFloat( "shaderParm3", "1" );
 	renderEntity->shaderParms[ 4 ]					= args->GetFloat( "shaderParm4", "0" );
 	renderEntity->shaderParms[ 5 ]					= args->GetFloat( "shaderParm5", "0" );

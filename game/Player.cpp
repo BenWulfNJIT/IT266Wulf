@@ -6637,6 +6637,10 @@ Searches nearby locations
    	if ( hud ) {
  		idLocationEntity *locationEntity = gameLocal.LocationForPoint( GetEyePosition() );
  		if ( locationEntity ) {
+			//idVec3 currentLocation = idPlayer::GetPosition
+			//idCmdSystem::Cmd_GetViewpos_f
+			const renderView_t* view = GetRenderView();
+			gameLocal.Printf("(%s) %.1f\n", view->vieworg.ToString(), view->viewaxis[0].ToYaw());
  			hud->SetStateString( "location", locationEntity->GetLocation() );
  		} else {
 // RAVEN BEGIN

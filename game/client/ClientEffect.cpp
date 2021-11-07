@@ -231,8 +231,11 @@ bool rvClientEffect::Play ( int _startTime, bool _loop, const idVec3& endOrigin 
 
 	renderEffect.shaderParms[SHADERPARM_RED] = 1.0f;
 	renderEffect.shaderParms[SHADERPARM_GREEN] = 1.0f;
-	renderEffect.shaderParms[SHADERPARM_BLUE] = 200.0f;
+	//200
+	renderEffect.shaderParms[SHADERPARM_BLUE] = 1.0f;
 	renderEffect.shaderParms[SHADERPARM_ALPHA] = 1.0f;
+	
+	//RAINBOW HERE
 	renderEffect.shaderParms[SHADERPARM_BRIGHTNESS] = 178.0f; 
 	renderEffect.shaderParms[SHADERPARM_TIMEOFFSET] = MS2SEC( gameLocal.time ); 
 	renderEffect.hasEndOrigin = ( endOrigin != vec3_origin );

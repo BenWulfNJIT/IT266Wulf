@@ -117,7 +117,9 @@ public:
 	bool					checkForCrit(int damage, int location);
 	void					setPlayerCurrency(int damage, bool critCheck);
 	int						playerCurrency = 0;
-
+	float					lifesteal = 0.0f;
+	float					GetLifesteal();
+	void					SetLifesteal();
 	//WULF END
 	static const int		MAX_PVS_AREAS = 4;
 

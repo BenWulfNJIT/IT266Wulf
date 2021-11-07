@@ -3614,7 +3614,12 @@ void idEntity::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damag
 }
 //WULF BEGIN
 
-
+float idEntity::GetLifesteal() {
+	return lifesteal;
+}
+void idEntity::SetLifesteal() {
+	lifesteal += 0.1f;
+}
 void idEntity::setPlayerCurrency(int damage, bool critCheck)
 {
 	if (critCheck) {

@@ -241,9 +241,43 @@ void idInventory::Clear( void ) {
 idInventory::GivePowerUp
 ==============
 */
+//BWUAH
+int speedModCount;
+float speedMod = 1.0f;
+
+
 void idInventory::GivePowerUp( idPlayer *player, int powerup, int msec ) {
-	powerups |= 1 << powerup;
-	powerupEndTime[ powerup ] = msec == -1 ? -1 : (gameLocal.time + msec);
+	//powerups |= 1 << powerup;
+	//powerupEndTime[ powerup ] = msec == -1 ? -1 : (gameLocal.time + msec);
+	if (powerup == POWERUP_HASTE) {
+		speedMod += 0.1;
+	}
+	if (powerup == POWERUP_QUADDAMAGE) {
+	//SPLIT SHOT
+		player->splitShotCount++;
+		//player->weapon->spread = 10.0f;
+		player->spreadUp++;
+	}
+	if (powerup == POWERUP_REGENERATION) {
+	//LIFESTEAL
+		
+		gameLocal.Printf("Test #1: ");
+		gameLocal.Printf(player->GetName());
+		gameLocal.Printf("\n");
+		
+		player->lifesteal+=0.1f;
+		gameLocal.Printf("Lifesteal is: %f\n", player->lifesteal);
+		//SetLifesteal();
+
+		//idEntity::player->GetName();
+		
+
+
+		
+		
+	}
+
+
 }
 
 /*
@@ -3397,10 +3431,17 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	if ( temp != health ) {		
 		_hud->SetStateInt   ( "player_healthDelta", temp == -1 ? 0 : (temp - health) );
 		_hud->SetStateInt	( "player_health", health < -100 ? -100 : health );
+
 		_hud->SetStateFloat	( "player_healthpct", idMath::ClampFloat ( 0.0f, 1.0f, (float)health / (float)inventory.maxHealth ) );
 		_hud->HandleNamedEvent ( "updateHealth" );
 	}
-		
+	//WULF
+	
+		_hud->SetStateInt("player_currency", playerCurrency);
+		_hud->SetStateInt("current_wave", gameLocal.currentLevel);
+		_hud->HandleNamedEvent("updateCurrency");
+	
+	
 	temp = _hud->State().GetInt ( "player_armor", "-1" );
 	if ( temp != inventory.armor ) {
 		_hud->SetStateInt ( "player_armorDelta", temp == -1 ? 0 : (temp - inventory.armor) );
@@ -4856,6 +4897,7 @@ void idPlayer::UpdatePowerUps( void ) {
 
 				// for flags, set the powerup_flag_* variables, which give us a special pulsing flag display
 				if( i == POWERUP_CTF_MARINEFLAG || i == POWERUP_CTF_STROGGFLAG || i == POWERUP_CTF_ONEFLAG ) {
+				//if (true) {
 					hud->SetStateInt( "powerup_flag_visible", 1 );
 				} else {
 					hud->SetStateString ( va("powerup%d_icon", index ), GetPowerupDef(i)->dict.GetString ( "inv_icon" ) );
@@ -7210,7 +7252,9 @@ void idPlayer::UpdateFocus( void ) {
 				}
 
 				ui->SetStateString( "player_health", va("%i", health ) );
+				ui->SetStateString("player_currency", va("$%i", playerCurrency));
 				ui->SetStateString( "player_armor", va( "%i%%", inventory.armor ) );
+				ui->SetStateString("current_wave", va("$%i", gameLocal.currentLevel));
 
 				kv = ent->spawnArgs.MatchPrefix( "gui_", NULL );
 				while ( kv ) {
@@ -8760,7 +8804,7 @@ void idPlayer::AdjustSpeed( void ) {
 	}
 
 	//physicsObj.SetSpeed( speed, pm_crouchspeed.GetFloat() );
-	physicsObj.SetSpeed(500.0, pm_crouchspeed.GetFloat());
+	physicsObj.SetSpeed(300.0*speedMod, pm_crouchspeed.GetFloat());
 }
 
 /*
@@ -10199,6 +10243,7 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
  	// inform the attacker that they hit someone
  	attacker->DamageFeedback( this, inflictor, damage);
+	
 	//bool critflag = checkForCrit(damage, location);
 	
 	//gameLocal.Printf("TESTING %i\n", critflag);
@@ -11917,7 +11962,8 @@ void idPlayer::LocalClientPredictionThink( void ) {
  	if ( !gameLocal.inCinematic && weaponViewModel && ( health > 0 ) && !( gameLocal.isMultiplayer && spectating ) ) {
 		UpdateWeapon();
 	}
-
+	//Wulf
+	
 	UpdateHud();
 
  	if ( gameLocal.isNewFrame ) {

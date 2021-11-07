@@ -269,7 +269,11 @@ public:
 
 class idPlayer : public idActor {
 public:
+	//WULF
+	int						splitShotCount = 0;
+	int						spreadUp = 0;
 
+	//WULF
  	enum {
  		EVENT_IMPULSE = idEntity::EVENT_MAXEVENTS,
  		EVENT_EXIT_TELEPORTER,

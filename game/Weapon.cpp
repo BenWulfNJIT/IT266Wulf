@@ -2414,6 +2414,7 @@ int	rvWeapon::LowAmmo() const {
 rvWeapon::AmmoRequired
 ================
 */
+
 int	rvWeapon::AmmoRequired( void ) const {
 	return ammoRequired;
 }
@@ -2447,6 +2448,7 @@ void rvWeapon::SetClip ( int amount ) {
 rvWeapon::UseAmmo
 ================
 */
+//WULF
 void rvWeapon::UseAmmo ( int amount ) {
 	owner->inventory.UseAmmo( ammoType, amount * ammoRequired );
 	if ( clipSize && ammoRequired ) {
@@ -2456,7 +2458,7 @@ void rvWeapon::UseAmmo ( int amount ) {
 		}
 	}
 }
-
+//WULF
 /*
 ================
 rvWeapon::AddToClip
@@ -2516,6 +2518,7 @@ void rvWeapon::Attack( bool altAttack, int num_attacks, float spread, float fuse
 	}
 
 	// avoid all ammo considerations on an MP client
+	//WULF invert this boolean to get infinite ammo
 	if ( !gameLocal.isClient ) {
 		// check if we're out of ammo or the clip is empty
 		int ammoAvail = owner->inventory.HasAmmo( ammoType, ammoRequired );

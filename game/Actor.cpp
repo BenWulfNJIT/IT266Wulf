@@ -2424,8 +2424,29 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 
 
 
-	
+		//if(attacker)
+	gameLocal.Printf("ATTACKER IS: ");
+	gameLocal.Printf(attacker->idEntity::GetName());
+	gameLocal.Printf("\n");
+	idStr PLAYER_ONE = "player1";
+	if (attacker->name == PLAYER_ONE) {
+		gameLocal.Printf("SUCCESS, should be adding: %i\n", idMath::Ceil(damage * attacker->lifesteal));
+
+		
+
+			//idPlayer::GetName
+			if (attacker->health < 125) {
+
+				attacker->health = idMath::ClampInt(0,125,attacker->health + int(idMath::Ceil(damage * attacker->lifesteal)));
+			}
+	}
+
 		attacker->setPlayerCurrency(damage, critCheck);
+		
+
+
+		//hud->SetStateString(va("powerup%d_time", index), inventory.powerupEndTime[i] == -1 ? "" : va("%d", (int)MS2SEC(inventory.powerupEndTime[i] - gameLocal.time) + 1));
+		//hud->SetStateInt(va("powerup%d_visible", index), 1);
 	
 
 

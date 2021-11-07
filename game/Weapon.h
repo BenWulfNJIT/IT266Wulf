@@ -48,7 +48,7 @@ public:
 	void					Save						( idSaveGame *savefile ) const;					// archives object for save game file
 	void					Restore						( idRestoreGame *savefile );					// unarchives object from save game file
 
-
+	
 	// Weapon definition management
 	void					Clear						( void );
 
@@ -148,6 +148,7 @@ public:
 	void				Restore						( idRestoreGame *savefile );
 	virtual void		PreSave						( void );
 	virtual void		PostSave					( void );
+
 
 
 	// Visual presentation

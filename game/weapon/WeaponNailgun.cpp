@@ -644,6 +644,7 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			
 			if ( !wsfl.attack ) {
 				SetState ( "Idle", parms.blendFrames );				
 				return SRESULT_DONE;

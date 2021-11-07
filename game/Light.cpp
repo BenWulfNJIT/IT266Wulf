@@ -509,7 +509,7 @@ void idLight::SetLightLevel( void ) {
 	idVec3	color;
 	float	intensity;
 
-	intensity = ( float )currentLevel / ( float )levels;
+	intensity = (( float )currentLevel / ( float )levels);
 	color = baseColor * intensity;
 	renderLight.shaderParms[ SHADERPARM_RED ]	= color[ 0 ];
 	renderLight.shaderParms[ SHADERPARM_GREEN ]	= color[ 1 ];
@@ -638,6 +638,7 @@ idLight::On
 ================
 */
 void idLight::On( void ) {
+	//here
 	currentLevel = levels;
 	// offset the start time of the shader to sync it to the game time
 	renderLight.shaderParms[ SHADERPARM_TIMEOFFSET ] = -MS2SEC( gameLocal.time );

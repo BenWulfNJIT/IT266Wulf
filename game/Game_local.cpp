@@ -7268,6 +7268,21 @@ void idGameLocal::BeginLevel(int level) {
 	bossWaveSpawns.idDict::Set("classname", "monster_turret_flying");
 	bossWaveSpawns.idDict::SetVector("origin", idVec3(7072, -8965, -235));
 
+	// ===================== LOOT MAN SPAWN ===================================
+	
+	idDict lootMan;
+	lootMan.idDict::Set("anim", "idle");
+	lootMan.idDict::Set("name", "lootMan");
+	lootMan.idDict::Set("classname", "char_marine_npc_metcalf_airdefense");
+	lootMan.idDict::SetVector("origin", idVec3(6000, -5590, -2250));
+
+	//independently spawn loot man
+	if (level == 4) {
+		SpawnEntityDef(lootMan);
+
+	}
+	
+
 	if (level == 0) {
 
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);

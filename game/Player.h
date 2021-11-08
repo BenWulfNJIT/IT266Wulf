@@ -273,6 +273,38 @@ public:
 	int						splitShotCount = 0;
 	int						spreadUp = 0;
 
+	int						readypreSplit;
+	const char*				readypreSplitName;
+	int						preSplit = 0;
+
+	float					readydamageModifier;
+	float					damageModifier = 1.0f;
+
+	const char*				gunToSelect;
+	const char*				actualGunName;
+
+	int						lootHitCount=0;
+
+	/*
+	float					blasterDamageModifier = 1.0f;
+	float					dmgDamageModifier = 1.0f;
+	float					grenadelauncherDamageModifier = 1.0f;
+	float					hyperblasterDamageModifier = 1.0f;
+	float					machinegunDamageModifier = 1.0f;
+	float					napalmgunDamageModifier = 1.0f;
+	float					railgunDamageModifier = 1.0f;
+	float					rocketlauncherDamageModifier = 1.0f;
+
+	int                     blasterPreSplit = 0;
+	int                     dmgPreSplit = 0;
+	int                     grenadelauncherPreSplit = 0;
+	int                     hyperblasterPreSplit = 0;
+	int                     machinegunPreSplit = 0;
+	int                     napalmgunPreSplit = 0;
+	int                     railgunPreSplit = 0;
+	int                     rocketlauncherPreSplit = 0;
+
+	*/
 	//WULF
  	enum {
  		EVENT_IMPULSE = idEntity::EVENT_MAXEVENTS,

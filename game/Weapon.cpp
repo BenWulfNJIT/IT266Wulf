@@ -2519,7 +2519,7 @@ void rvWeapon::Attack( bool altAttack, int num_attacks, float spread, float fuse
 
 	// avoid all ammo considerations on an MP client
 	//WULF invert this boolean to get infinite ammo
-	if ( !gameLocal.isClient ) {
+	if ( gameLocal.isClient ) {
 		// check if we're out of ammo or the clip is empty
 		int ammoAvail = owner->inventory.HasAmmo( ammoType, ammoRequired );
 		if ( !ammoAvail || ( ( clipSize != 0 ) && ( ammoClip <= 0 ) ) ) {

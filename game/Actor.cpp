@@ -1274,6 +1274,7 @@ idActor::SetState
 */
 void idActor::SetState( const char *statename, int flags ) {
 	gameLocal.totalSpawns--;
+	
 	gameLocal.Printf("Total Spawns after Dying: %i\n", gameLocal.totalSpawns);
 	if (gameLocal.totalSpawns <= 0) {
 		gameLocal.SetLevel(gameLocal.currentLevel);
@@ -2387,6 +2388,25 @@ calls Damage()
 */
 void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
+	
+
+	if (gameLocal.FindEntity("lootTest")->health < 497) {
+		}
+	/*
+	if (gameLocal.FindEntity("lootTest")->health <= 0) {
+		gameLocal.FindEntity("lootTest")->health = 500;
+		gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(0, 0, 0));
+		//gameLocal.SpawnEntityDef(gameLocal.FindEntity("lootTest")->spawnArgs);
+		gameLocal.totalSpawns--;
+		gameLocal.SetLevel(gameLocal.currentLevel);
+		gameLocal.Printf("Looty boys health: %i\nTotal spawns: %i\nCurrent Level: %i\n", gameLocal.FindEntity("lootTest")->health, gameLocal.totalSpawns, gameLocal.currentLevel);
+
+		
+		//gameLocal.BeginLevel(gameLocal.currentLevel);
+	}
+		
+	*/
+	
 	if ( !fl.takedamage ) {
 		return;
 	}
@@ -2417,8 +2437,10 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 		}
 	}
 
+	idPlayer* player = gameLocal.GetLocalPlayer();
 	int	damage = damageDef->GetInt( "damage" ) * damageScale;
 	damage = GetDamageForLocation( damage, location );
+	damage =static_cast<int>(damage * player->damageModifier);
 	//bool critflag = checkForCrit(damage, location);
 	//idPlayer::setPlayerCurrency(damage, location);
 
@@ -2457,7 +2479,18 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 	// friendly fire damage
 	bool noDmgFeedback = false;
 	if ( attacker->IsType ( idActor::Type ) && static_cast<idActor*>(attacker)->team == team ) {
-		
+		if (player->lootHitCount >= 3) {
+			player->lootHitCount = 0;
+			gameLocal.FindEntity("lootTest")->health = 500;
+			gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(0, 0, 0));
+			gameLocal.totalSpawns--;
+			gameLocal.SetLevel(gameLocal.currentLevel);
+			gameLocal.Printf("Looty boys health: %i\nTotal spawns: %i\nCurrent Level: %i\n", gameLocal.FindEntity("lootTest")->health, gameLocal.totalSpawns, gameLocal.currentLevel);
+			gameLocal.BeginLevel(gameLocal.currentLevel);
+		}
+		else {
+			player->lootHitCount++;
+		}
 		OnFriendlyFire ( static_cast<idActor*>(attacker) );
 		
 		// jshepard:
@@ -2471,12 +2504,12 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 			}
 			
 			//reduce the damage
-			damage = 0;
-			noDmgFeedback = true;
+			damage = 1;
+			noDmgFeedback = false;
 		}		
 
 		// reduce friendly fire damage by the teamscale
-		damage = floor( damage * damageDef->GetFloat ( "teamScale", "0.5" ) );
+		//damage = floor( damage * damageDef->GetFloat ( "teamScale", "0.5" ) );
 
 
 	}

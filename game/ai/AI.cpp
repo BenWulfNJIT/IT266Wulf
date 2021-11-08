@@ -1367,7 +1367,7 @@ idAI::UpdateStates
 */
 void idAI::UpdateStates ( void ) {
 	MEM_SCOPED_TAG(tag,MA_DEFAULT);
-
+	
 	// Continue updating tactical state if for some reason we dont have one 
 	if ( !aifl.dead && !aifl.scripted && !aifl.action && stateThread.IsIdle ( ) && aifl.scriptedEndWithIdle ) {
 		UpdateTactical ( 0 );
@@ -1382,6 +1382,7 @@ void idAI::UpdateStates ( void ) {
 		// update the animstate if we're not hidden
 		UpdateAnimState();
 	}
+	
 }
 
 /*
@@ -1733,6 +1734,177 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 			physicsObj.DisableImpact();
 		}
 	}
+	int checkPowerupDrop = gameLocal.random.RandomInt(10);
+	gameLocal.Printf("Random int should be: %i\n", checkPowerupDrop);
+	idDict powerupDrop;
+	idVec3 lastLocation = physicsObj.GetOrigin();
+	powerupDrop.idDict::SetVector("origin", lastLocation);
+
+	powerupDrop.idDict::Set("nodrop", "1");
+
+	//TESTING TO CREATE WEAPON SYSTEM
+	// bloo
+	gameLocal.Printf("pre-spawn\n");
+	/*
+	idActor lootTest;
+	lootTest.SetModel("models/mapobjects/multiplayer/jump_pad/jump_pad_color.lwo");
+	lootTest.SetOrigin(idVec3(6100, -5590, -2250));
+	lootTest.Spawn();
+	*/
+
+	/*
+	idDict lootTest;
+
+	lootTest.idDict::Set("classname", "char_marine_npc_metcalf_airdefense");
+	//lootTest.idDict::SetVector("origin", lastLocation);
+	lootTest.idDict::Set("passive", "1");
+	lootTest.idDict::Set("anim_idle", "idle_reclined_3");
+	lootTest.idDict::Set("noDamage", "1");
+	lootTest.idDict::Set("cinematic", "1");
+	lootTest.idDict::Set("undying", "1");
+
+	*/
+
+	
+
+	if (gameLocal.currentLevel % 3 == 0 && gameLocal.currentLevel != 0) {
+		idPlayer* player = gameLocal.GetLocalPlayer();
+		int checkWhichGun = gameLocal.random.RandomInt(8);
+		player->readydamageModifier = (static_cast<float>(gameLocal.random.RandomInt(11)) + 10.0f) / 10.0f;
+		player->readypreSplit = gameLocal.random.RandomInt(2);
+		if (player->readypreSplit == 0) {
+		player->readypreSplitName = "Default";
+	}
+		else {
+			player->readypreSplitName = "Split Shot";
+		}
+		switch (checkWhichGun) {
+		case 0:
+			player->gunToSelect = "Blaster";
+			player->actualGunName = "weapon_blaster";
+			//player->blasterDamageModifier = damageModifier;
+			//player->blasterPreSplit = isPreSplit;
+
+			break;
+		case 1:
+			player->gunToSelect = "Dark Matter Gun";
+			player->actualGunName = "weapon_dmg";
+
+			break;
+		case 2:
+			player->gunToSelect = "Grenade Launcher";
+			player->actualGunName = "weapon_grenadelauncher";
+			break;
+		case 3:
+			player->gunToSelect = "Hyperblaster";
+			player->actualGunName = "weapon_hyperblaster";
+			break;
+		case 4:
+			player->gunToSelect = "Machine Gun";
+			player->actualGunName = "weapon_machinegun";
+			break;
+		case 5:
+			player->gunToSelect = "Napalm Gun";
+			player->actualGunName = "weapon_napalmgun";
+
+			break;
+		case 6:
+			player->gunToSelect = "Railgun";
+			player->actualGunName = "weapon_railgun";
+
+			break;
+		case 7:
+			player->gunToSelect = "Rocket Launcher";
+			player->actualGunName = "weapon_rocketlauncher";
+
+			break;
+
+
+		default:
+			player->gunToSelect = "Blaster";
+			player->actualGunName = "weapon_blaster";
+			break;
+		}
+
+		//gameLocal.FindEntity("lootTest")->SetOrigin(lastLocation);
+		gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(7093,-7086, -2360));
+		gameLocal.totalSpawns++;
+		gameLocal.Printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\nGun: %s\nDamage Modifier: %f\nSplit Shot: %i\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n", player->gunToSelect, player->readydamageModifier, player->readypreSplit);
+	}
+
+
+	
+	
+	
+	
+	
+	//player->damageModifier = preMod / 10.0f;
+	//player->preSplit = isPreSplit;
+	//const char* player->gunToSelect;
+
+	//player->damageModifier = 200.0f;
+	//player->RemoveInventoryItem("weapon_shotgun");
+	//player->inventory.Clear();
+	
+	
+	//player->ui->SetStateString("current_weapon", va("%s", player->gunToSelect));
+	//if (gameLocal.currentLevel % 3 == 0 && gameLocal.currentLevel != 0) {
+
+		
+
+
+	//}
+
+	//round 3 spawns boss && loot
+	//boss dies, loot teleports to their spot
+	//store temp values
+	//update hud
+
+
+
+
+
+
+
+
+
+
+	//===========================SPAWN BELOW ======================
+	
+
+	//gameLocal.FindEntity("lootTest");
+	//idAI* lootBox = (idAI*)gameLocal.FindEntity("lootTest");
+	//gameLocal.FindEntity("lootTest")->idAI::SetState("State_Killed")
+	//lootBox->SetState("State_Killed");
+	
+
+	
+	gameLocal.Printf("post-spawn\n");
+
+
+
+
+
+	if (checkPowerupDrop == 1 && gameLocal.currentLevel%3 != 0) {
+		gameLocal.Printf("inside check powerup drop 1\n");
+
+		powerupDrop.idDict::Set("classname", "powerup_haste");
+		gameLocal.SpawnEntityDef(powerupDrop);
+	}
+	if (checkPowerupDrop == 2 && gameLocal.currentLevel % 3 != 0) {
+		gameLocal.Printf("inside check powerup drop 2\n");
+
+		powerupDrop.idDict::Set("classname", "powerup_quad_damage");
+		gameLocal.SpawnEntityDef(powerupDrop);
+	}
+	if (checkPowerupDrop == 3 && gameLocal.currentLevel % 3 != 0) {
+		gameLocal.Printf("inside check powerup drop 3\n");
+
+		powerupDrop.idDict::Set("classname", "powerup_regeneration");
+		gameLocal.SpawnEntityDef(powerupDrop);
+	}
+	gameLocal.Printf("Just before state killed\n");
+
 
 	SetState ( "State_Killed" );
 
@@ -1812,7 +1984,24 @@ idAI::TalkTo
 =====================
 */
 void idAI::TalkTo( idActor *actor ) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (player->playerCurrency >= 1000) {
+		player->inventory.Clear();
+		player->GiveItem(player->actualGunName);
+		player->inventory.Clear();
+		player->GiveItem(player->actualGunName);
+		player->damageModifier = player->readydamageModifier;
+		player->preSplit = player->readypreSplit;
+		player->playerCurrency -= 1000;
 
+		//gameLocal.FindEntity("lootTest")->Killed(NULL, NULL, 1, idVec3(0,0,0), 40);
+		gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(0, 0, 0));
+		gameLocal.totalSpawns--;
+		gameLocal.SetLevel(gameLocal.currentLevel);
+		gameLocal.BeginLevel(gameLocal.currentLevel);
+
+	}
+	
 	// jshepard: the dead do not speak.
 	if ( aifl.dead )
 		return;
@@ -4888,6 +5077,16 @@ idAI::ReactToPain
 ============
 */
 void idAI::ReactToPain ( idEntity* attacker, int damage ) {
+	/*
+	if (gameLocal.FindEntity("lootTest")->health <= 0) {
+		gameLocal.totalSpawns--;
+		
+			gameLocal.SpawnEntityDef(gameLocal.FindEntity("lootTest")->spawnArgs);
+		
+		gameLocal.SetLevel(gameLocal.currentLevel);
+		gameLocal.BeginLevel(gameLocal.currentLevel);
+	}
+	*/
 	CheckForReplaceEnemy ( attacker );
 }
 	

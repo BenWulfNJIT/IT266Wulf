@@ -1622,6 +1622,7 @@ bool idAI::UpdateTactical ( int delay ) {
 	}
 
 	// Keep the enemy status up to date
+	/*
 	if ( !combat.fl.ignoreEnemies ) {
 		// If we dont have an enemy or havent seen our enemy for a while just find a new one entirely
 		if ( gameLocal.time - enemy.checkTime > 250 ) {
@@ -1630,7 +1631,7 @@ bool idAI::UpdateTactical ( int delay ) {
 			CheckForEnemy ( true );
 		}
 	}
-
+	*/
 	// AI Speeds
 	if ( ai_speeds.GetBool ( ) ) {
 		aiManager.timerFindEnemy.Stop ( );

@@ -7263,6 +7263,7 @@ void idGameLocal::BeginLevel(int level) {
 	idDict regularWaveSpawns;
 	regularWaveSpawns.idDict::Set("anim", "idle");
 	regularWaveSpawns.idDict::Set("classname", "monster_strogg_marine");
+	regularWaveSpawns.idDict::Set("enemy", "player1");
 	//regularWaveSpawns.idDict::SetVector("origin", idVec3(7000, -9000, -2350));
 	int quantityToSpawn = level;
 
@@ -7272,6 +7273,7 @@ void idGameLocal::BeginLevel(int level) {
 	bossWaveSpawns.idDict::Set("anim", "idle");
 	bossWaveSpawns.idDict::Set("classname", "monster_turret_flying");
 	bossWaveSpawns.idDict::SetVector("origin", idVec3(7072, -8965, -235));
+	bossWaveSpawns.idDict::Set("enemy", "player1");
 
 	// ===================== LOOT MAN SPAWN ===================================
 	
@@ -7283,34 +7285,20 @@ void idGameLocal::BeginLevel(int level) {
 
 	// ===================== LOOT MAN CHARACTERISTICS ===================================
 
-	int preSplit;
-	int randomDamageModifier;
-	
+	idDict lootTest;
+
+	lootTest.idDict::Set("classname", "char_marine_npc_metcalf_airdefense");
+	//lootTest.idDict::SetVector("origin", lastLocation);
+	lootTest.idDict::SetVector("origin", idVec3(5013, -2974, -2088));
+	lootTest.idDict::Set("name", "lootTest");
+	lootTest.idDict::Set("passive", "1");
+	lootTest.idDict::Set("anim_idle", "idle_reclined_3");
+	//lootTest.idDict::Set("noDamage", "1");
+	lootTest.idDict::Set("cinematic", "1");
+	lootTest.idDict::Set("undying", "1");
+
 	// ===================== LIGHTING SHADER STUFF ===================================
 
-	//idVec3 farSpawn = idVec3(0, 0, 0);
-	//idVec3 closeSpawn = idVec3(6000, -5590, -2250);
-	//idAngles defaultAngle = idAngles(0, 0, 0);
-	//redShader
-	
-	//idEntity redShader;
-	//redShader.idEntity::SetOrigin(idVec3(6000, -5590, -2250));
-	//redShader.spawnArgs.SetVector("origin", idVec3(6000, -5590, -2250));
-	
-	//redShader.spawnArgs.Set("classname", "light");
-	//redShader.spawnArgs.Set("name", "redShader");
-	//	redShader.spawnArgs.Set("nodynamicshadows", "0");
-	//	redShader.spawnArgs.Set("noshadows", "1");
-	//	redShader.spawnArgs.Set("nospecular", "0");
-	/*	redShader.spawnArgs.Set("nodiffuse", "0");
-		redShader.spawnArgs.Set("falloff", "0");
-		redShader.spawnArgs.Set("texture", "lights/rav_slowfalloff");
-		redShader.spawnArgs.Set("_color", "210 0.1 0.1");
-		redShader.spawnArgs.Set("light_radius", "1576 2348 2000");
-		redShader.spawnArgs.Set("light_center", "-256 712 -1064");
-		*/
-	//redShader.idEntity::Spawn);
-	
 	// =========================== RED SHADER =================================
 	idDict redShader;
 	redShader.idDict::Set("classname", "light");
@@ -7322,7 +7310,7 @@ void idGameLocal::BeginLevel(int level) {
 	redShader.idDict::Set("nodiffuse", "0");
 	redShader.idDict::Set("falloff", "0");
 	redShader.idDict::Set("texture", "lights/rav_slowfalloff");
-	redShader.idDict::Set("_color", "220 0.1 0.1");
+	redShader.idDict::Set("_color", "0.9 0.1 0.1");
 	redShader.idDict::Set("light_radius", "5000 5000 5000");
 	redShader.idDict::Set("light_center", "-256 712 -1064");
 
@@ -7337,7 +7325,7 @@ void idGameLocal::BeginLevel(int level) {
 	blueShader.idDict::Set("nodiffuse", "0");
 	blueShader.idDict::Set("falloff", "0");
 	blueShader.idDict::Set("texture", "lights/rav_slowfalloff");
-	blueShader.idDict::Set("_color", "0.1 0.1 220");
+	blueShader.idDict::Set("_color", "0.1 0.1 0.9");
 	blueShader.idDict::Set("light_radius", "5000 5000 5000");
 	blueShader.idDict::Set("light_center", "-256 712 -1064");
 
@@ -7352,28 +7340,14 @@ void idGameLocal::BeginLevel(int level) {
 	greenShader.idDict::Set("nodiffuse", "0");
 	greenShader.idDict::Set("falloff", "0");
 	greenShader.idDict::Set("texture", "lights/rav_slowfalloff");
-	greenShader.idDict::Set("_color", "0.1 220 0.1");
+	greenShader.idDict::Set("_color", "0.1 0.9 0.1");
 	greenShader.idDict::Set("light_radius", "5000 5000 5000");
 	greenShader.idDict::Set("light_center", "-256 712 -1064");
-
-	
-	
-		
-		
-		
-		
-		
-		
-		
-		
-
 
 	//independently spawn loot man
 	if (level%3 ==  1) {
 
-
-		//idRandom.RandomInt(10);
-		SpawnEntityDef(lootMan);
+		//SpawnEntityDef(lootMan);
 		FindEntity("redShader")->SetOrigin(idVec3(0,0,0));
 		FindEntity("blueShader")->SetOrigin(idVec3(6000, -5590, -100));
 		FindEntity("greenShader")->SetOrigin(idVec3(0, 0, 0));
@@ -7387,6 +7361,9 @@ void idGameLocal::BeginLevel(int level) {
 
 	if (level == 0) {
 		//redShader.Spawn();
+		SpawnEntityDef(lootTest);
+		FindEntity("lootTest")->health = 500;
+		
 		SpawnEntityDef(redShader);
 		SpawnEntityDef(greenShader);
 		SpawnEntityDef(blueShader);
@@ -7406,7 +7383,7 @@ void idGameLocal::BeginLevel(int level) {
 		//redShader.idDict::SetVector("origin", idVec3(7077, -8211, -2243));
 		//SpawnEntityDef(redShader);
 		//redShader.idDict::Delete("origin");
-
+		
 		
 		//do boss stuff
 		FindEntity("redShader")->SetOrigin(idVec3(6000, -5590, -100));
@@ -7415,6 +7392,7 @@ void idGameLocal::BeginLevel(int level) {
 
 		//idEntity::Teleport()
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
+		
 		SpawnEntityDef(bossWaveSpawns);
 		totalSpawns++;
 		Printf("Current Total Spawns After Spawning = %i\n", totalSpawns);

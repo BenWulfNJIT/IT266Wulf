@@ -245,6 +245,7 @@ idInventory::GivePowerUp
 int speedModCount;
 float speedMod = 1.0f;
 
+int lifestealPercent;
 
 void idInventory::GivePowerUp( idPlayer *player, int powerup, int msec ) {
 	//powerups |= 1 << powerup;
@@ -266,6 +267,7 @@ void idInventory::GivePowerUp( idPlayer *player, int powerup, int msec ) {
 		gameLocal.Printf("\n");
 		
 		player->lifesteal+=0.1f;
+		lifestealPercent = player->lifesteal * 100;
 		gameLocal.Printf("Lifesteal is: %f\n", player->lifesteal);
 		//SetLifesteal();
 
@@ -3439,6 +3441,11 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	
 		_hud->SetStateInt("player_currency", playerCurrency);
 		_hud->SetStateInt("current_wave", gameLocal.currentLevel);
+		//_hud->SetStateString("current_weapon", gunToSelect);
+		_hud->SetStateInt("lifesteal_count", lifestealPercent);
+		_hud->SetStateInt("splitshot_count", splitShotCount);
+		_hud->SetStateFloat("haste_count", speedMod);
+		
 		_hud->HandleNamedEvent("updateCurrency");
 	
 	
@@ -6231,6 +6238,8 @@ void idPlayer::Weapon_NPC( void ) {
 		if ( !talkingNPC ) {
 			idAI *focusAI = static_cast<idAI*>(focusEnt.GetEntity());
 			if ( focusAI ) {
+				//wulf
+				gameLocal.Printf("Focusin dat ai\n");
 				focusAI->TalkTo( this );
 				talkingNPC = focusAI;
 			}
@@ -6639,8 +6648,10 @@ Searches nearby locations
  		if ( locationEntity ) {
 			//idVec3 currentLocation = idPlayer::GetPosition
 			//idCmdSystem::Cmd_GetViewpos_f
+			//gameLocal.Printf("TEST %i\n", gameLocal.random.RandomInt(1));
+			//gameLocal.Printf("Test: %f\n", damageModifier);
 			const renderView_t* view = GetRenderView();
-			gameLocal.Printf("(%s) %.1f\n", view->vieworg.ToString(), view->viewaxis[0].ToYaw());
+			//gameLocal.Printf("(%s) %.1f\n", view->vieworg.ToString(), view->viewaxis[0].ToYaw());
  			hud->SetStateString( "location", locationEntity->GetLocation() );
  		} else {
 // RAVEN BEGIN
@@ -7258,7 +7269,21 @@ void idPlayer::UpdateFocus( void ) {
 				ui->SetStateString( "player_health", va("%i", health ) );
 				ui->SetStateString("player_currency", va("$%i", playerCurrency));
 				ui->SetStateString( "player_armor", va( "%i%%", inventory.armor ) );
-				ui->SetStateString("current_wave", va("$%i", gameLocal.currentLevel));
+				ui->SetStateString("current_wave", va("%i", gameLocal.currentLevel));
+				ui->SetStateString("current_weapon", va("%s", gunToSelect));
+				
+				ui->SetStateString("fire_type", va("%s", readypreSplitName));
+					
+				
+				ui->SetStateString("damage_modifier", va("%f", readydamageModifier));
+				ui->SetStateString("damage_modifier", va("%i", 1000));
+				
+
+				ui->SetStateString("splitshot_count", va("%i", splitShotCount));
+				ui->SetStateString("lifesteal_count", va("%i", lifestealPercent));
+				ui->SetStateString("haste_count", va("%f", speedMod));
+
+				//oob
 
 				kv = ent->spawnArgs.MatchPrefix( "gui_", NULL );
 				while ( kv ) {
@@ -7359,6 +7384,16 @@ void idPlayer::UpdateFocus( void ) {
 
  	if ( cursor && ( oldTalkCursor != talkCursor ) ) {
  		cursor->SetStateInt( "talkcursor", talkCursor );
+		cursor->SetStateString("current_weapon", gunToSelect);
+		cursor->SetStateFloat("damage_modifier", readydamageModifier);
+		cursor->SetStateInt("weapon_price", 1000);
+		
+			cursor->SetStateString("fire_type", readypreSplitName);
+		
+		
+			
+		
+		
  	}
  
 }

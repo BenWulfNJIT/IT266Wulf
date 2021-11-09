@@ -7270,6 +7270,7 @@ void idPlayer::UpdateFocus( void ) {
 				ui->SetStateString("player_currency", va("$%i", playerCurrency));
 				ui->SetStateString( "player_armor", va( "%i%%", inventory.armor ) );
 				ui->SetStateString("current_wave", va("%i", gameLocal.currentLevel));
+
 				ui->SetStateString("current_weapon", va("%s", gunToSelect));
 				
 				ui->SetStateString("fire_type", va("%s", readypreSplitName));

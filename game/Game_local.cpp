@@ -7312,7 +7312,7 @@ void idGameLocal::BeginLevel(int level) {
 	redShader.idDict::Set("nodiffuse", "0");
 	redShader.idDict::Set("falloff", "0");
 	redShader.idDict::Set("texture", "lights/rav_slowfalloff");
-	redShader.idDict::Set("_color", "0.9 0.1 0.1");
+	redShader.idDict::Set("_color", "50 0.1 0.1");
 	redShader.idDict::Set("light_radius", "5000 5000 5000");
 	redShader.idDict::Set("light_center", "-256 712 -1064");
 
@@ -7327,7 +7327,7 @@ void idGameLocal::BeginLevel(int level) {
 	blueShader.idDict::Set("nodiffuse", "0");
 	blueShader.idDict::Set("falloff", "0");
 	blueShader.idDict::Set("texture", "lights/rav_slowfalloff");
-	blueShader.idDict::Set("_color", "0.1 0.1 0.9");
+	blueShader.idDict::Set("_color", "0.1 0.1 50");
 	blueShader.idDict::Set("light_radius", "5000 5000 5000");
 	blueShader.idDict::Set("light_center", "-256 712 -1064");
 
@@ -7342,7 +7342,7 @@ void idGameLocal::BeginLevel(int level) {
 	greenShader.idDict::Set("nodiffuse", "0");
 	greenShader.idDict::Set("falloff", "0");
 	greenShader.idDict::Set("texture", "lights/rav_slowfalloff");
-	greenShader.idDict::Set("_color", "0.1 0.9 0.1");
+	greenShader.idDict::Set("_color", "0.1 1 0.1");
 	greenShader.idDict::Set("light_radius", "5000 5000 5000");
 	greenShader.idDict::Set("light_center", "-256 712 -1064");
 

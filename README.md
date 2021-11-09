@@ -1,9 +1,7 @@
 # IT266Wulf - Quake 4 Mod - Risk of Border Rain - Benjamin Wulf
-# ------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Caution: this mod contains strobe-like lighting effects and colors which may affect those with photosensitive epilepsy or other photosensitivities
-# ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## ---------------------------------------How To Play ---------------------------------------------------
+## How To Play 
 
 In this mod for Quake 4, a game was created taking inspiration from ones such as Risk of Rain 2, and the Borderlands series.
 The player must collect powerups from enemy drops, as well as purchase weapons from loot drops from the marine entity that spawns on the bridge 
@@ -13,7 +11,7 @@ If the player does not wish to purchase the weapon, simply take a step back unti
 Within the game spawn, an initial monster entity is spawned for testing purposes, and the actual wave-based game begins after it is killed.
 The monster Spawns are across the bridge inside the map.
 
-## --------------------------------How To Download & Build ------------------------------------------
+## How To Download & Build 
 
 In order to play this modified version of Quake 4, a copy of the game must be purchased separately (Can be obtained via Steam).
 

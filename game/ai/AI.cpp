@@ -1995,7 +1995,7 @@ void idAI::TalkTo( idActor *actor ) {
 		player->playerCurrency -= 1000;
 
 		//gameLocal.FindEntity("lootTest")->Killed(NULL, NULL, 1, idVec3(0,0,0), 40);
-		gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(0, 0, 0));
+		gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(4655,-3843,-2160));
 		gameLocal.totalSpawns--;
 		gameLocal.SetLevel(gameLocal.currentLevel);
 		gameLocal.BeginLevel(gameLocal.currentLevel);

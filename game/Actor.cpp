@@ -1280,6 +1280,8 @@ void idActor::SetState( const char *statename, int flags ) {
 		gameLocal.SetLevel(gameLocal.currentLevel);
 		gameLocal.totalSpawns = 0;
 		gameLocal.BeginLevel(gameLocal.currentLevel);
+		gameLocal.Printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SetState @@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 	}
 	OnStateThreadClear( statename, flags );
 	stateThread.SetState ( statename, 0, 0, flags );
@@ -2200,6 +2202,7 @@ idActor::OnFriendlyFire
 =====================
 */
 void idActor::OnFriendlyFire ( idActor* attacker ) {
+	
 }
 
 /*
@@ -2479,28 +2482,31 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 	// friendly fire damage
 	bool noDmgFeedback = false;
 	if ( attacker->IsType ( idActor::Type ) && static_cast<idActor*>(attacker)->team == team ) {
-		if (player->lootHitCount >= 3) {
-			player->lootHitCount = 0;
-			gameLocal.FindEntity("lootTest")->health = 500;
-			gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(0, 0, 0));
-			gameLocal.totalSpawns--;
-			gameLocal.SetLevel(gameLocal.currentLevel);
-			gameLocal.Printf("Looty boys health: %i\nTotal spawns: %i\nCurrent Level: %i\n", gameLocal.FindEntity("lootTest")->health, gameLocal.totalSpawns, gameLocal.currentLevel);
-			gameLocal.BeginLevel(gameLocal.currentLevel);
-		}
-		else {
-			player->lootHitCount++;
-		}
+		
 		OnFriendlyFire ( static_cast<idActor*>(attacker) );
 		
 		// jshepard:
 		// if the player deals friendly fire damage it is reduced to 0. If the damage is splash damage,
 		// then the victim should use a pain anim.
 		if( static_cast<idPlayer*>( attacker ) == gameLocal.GetLocalPlayer() )	{
-			
+			if (player->lootHitCount >= 3) {
+				player->lootHitCount = 0;
+				gameLocal.FindEntity("lootTest")->health = 500;
+				gameLocal.FindEntity("lootTest")->SetOrigin(idVec3(4655, -3843, -2160));
+				gameLocal.totalSpawns--;
+				gameLocal.SetLevel(gameLocal.currentLevel);
+				//gameLocal.Printf("Looty boys health: %i\nTotal spawns: %i\nCurrent Level: %i\n", gameLocal.FindEntity("lootTest")->health, gameLocal.totalSpawns, gameLocal.currentLevel);
+				gameLocal.BeginLevel(gameLocal.currentLevel);
+				gameLocal.Printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@LOOTMANS FAULT health: %i hitCount: %i@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n", gameLocal.FindEntity("lootTest"), player->lootHitCount);
+			}
+			else {
+				player->lootHitCount++;
+			}
 			//play pain (maybe one day a special anim?) for damages that have the cower keyword
 			if ( damageDef->GetBool( "cower" ))	{
 				Pain( inflictor, attacker, damage, dir, location );
+
+				
 			}
 			
 			//reduce the damage

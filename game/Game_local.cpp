@@ -1494,6 +1494,8 @@ void idGameLocal::LoadMap( const char *mapName, int randseed ) {
 
 	//Wulf BEGIN
 	BeginLevel(currentLevel);
+	gameLocal.Printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ INIT FAULT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 	//WULF END
 }
 
@@ -7289,7 +7291,7 @@ void idGameLocal::BeginLevel(int level) {
 
 	lootTest.idDict::Set("classname", "char_marine_npc_metcalf_airdefense");
 	//lootTest.idDict::SetVector("origin", lastLocation);
-	lootTest.idDict::SetVector("origin", idVec3(5013, -2974, -2088));
+	lootTest.idDict::SetVector("origin", idVec3(4655, -3843, -2160));
 	lootTest.idDict::Set("name", "lootTest");
 	lootTest.idDict::Set("passive", "1");
 	lootTest.idDict::Set("anim_idle", "idle_reclined_3");
@@ -7343,6 +7345,11 @@ void idGameLocal::BeginLevel(int level) {
 	greenShader.idDict::Set("_color", "0.1 0.9 0.1");
 	greenShader.idDict::Set("light_radius", "5000 5000 5000");
 	greenShader.idDict::Set("light_center", "-256 712 -1064");
+
+	//============== To Move the Goomba tower=====================
+
+	int posMod = 0;
+	int heightMod = 0;
 
 	//independently spawn loot man
 	if (level%3 ==  1) {
@@ -7404,10 +7411,14 @@ void idGameLocal::BeginLevel(int level) {
 		Printf("IT IS CURRENTLY WAVE %i", currentLevel);
 
 		//do regular wave spawn
-		
+		//if(currentLevel%)
 		for (int i = 0; i < quantityToSpawn; i++) {
-
-			regularWaveSpawns.idDict::SetVector("origin", idVec3(7072, -8965, -2350+(i*150)));
+			if (i % 16 == 0) { 
+				posMod = (i / 16) * 100; 
+				heightMod = 0;
+			}
+			heightMod++;
+			regularWaveSpawns.idDict::SetVector("origin", idVec3(7072+posMod, -8965+posMod, -2350+(heightMod*150)));
 			//regularWaveSpawns.idDict::SetVector("origin", idVec3(6000 + (i*50), -5590, -2250));
 			SpawnEntityDef(regularWaveSpawns);
 			totalSpawns++;
